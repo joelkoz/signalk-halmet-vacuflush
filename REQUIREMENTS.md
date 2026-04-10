@@ -45,7 +45,8 @@ Behavior:
 - The flag state should also be re-sent periodically even if it has not changed.
 - This periodic state report interval should use the same shared configurable interval used for the pump running-state reports.
 - The flag should also be controllable via a Signal K PUT listener.
-- The Signal K metadata for this path should include `units: "bool"` and `supportsPut: true`.
+- The Signal K metadata for this path should include `supportsPut: true`. Do NOT include `units: "bool"`,
+  otherwise compatibility with KIP switches will break.
 
 #### Relay failure detection
 A timer should be used to track how long the pump has been disabled.  Report this disabled time to Signal K. If a pump reports that it is running via its digital input **despite** the fact that it is disabled, an alert should be sent to Signal K. Don't consider run signals that occur prior to at least 3 full seconds of disabled time.
