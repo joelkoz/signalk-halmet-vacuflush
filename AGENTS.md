@@ -46,10 +46,7 @@ This project uses SensESP concepts and patterns.
 
 ###Important
 - Use deepwiki MCP to query on `SignalK/SensESP` for general knowledge
-- The actual SensESP code used is in the `lib/` directory
-- `libdeps` references an unused copy of SensESP that should be ignored
-- Assume local fork is definitive truth for latest behavior
-- Prefer local fork when referencing framework code or proposing framework fixes.
+- The actual SensESP code used is in the `.pio/libdeps/halmet/SensESP` directory
 - If a limitation or bug appears to be in SensESP, it is acceptable to identify that clearly and propose a fix that could be made in the user's fork.
 - Do not replace SensESP with another framework unless explicitly asked.
 - App-specific SensESP-style enhancements in this project, such as extended listeners, custom transforms, or other reusable pipeline components, should use the `app` namespace.
@@ -57,7 +54,6 @@ This project uses SensESP concepts and patterns.
 - Do not place app-specific classes in the `sensesp` namespace unless the class actually belongs in the SensESP library.
 - Do not place app-specific classes in the `halmet` namespace; reserve `halmet` for generic HALMET-related code that could later move into a shared Halmet library.
 
-**CRITIAL** - This project uses the author's version of SensESP found in the `lib/` directory. Since PlatformIO prioritizes code in the `lib` folder, the copy that exists in `.pio/libdeps/halmet/SensESP` can and should be ignored.
 
 ## SignalK guidance
 - The historical Signal K specification repository is useful for general background, but it is not the authoritative source for current 2.x behavior.
