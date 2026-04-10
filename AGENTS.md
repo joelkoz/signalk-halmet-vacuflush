@@ -44,7 +44,7 @@ If these sources appear to conflict, stop and ask.
 ## SensESP guidance
 This project uses SensESP concepts and patterns.
 
-###Important
+### Important
 - Use deepwiki MCP to query on `SignalK/SensESP` for general knowledge
 - The actual SensESP code used is in the `.pio/libdeps/halmet/SensESP` directory
 - If a limitation or bug appears to be in SensESP, it is acceptable to identify that clearly and propose a fix that could be made in the user's fork.
