@@ -16,12 +16,39 @@
 
 namespace app {
 
+/**
+ * @brief SensESP-style "complex component" that monitors and protects one VacuFlush pump.
+ *
+ * VacuflushPumpMonitor owns the input, derived state, counters, fault logic,
+ * relay control, and default Signal K outputs for a single pump. It exposes
+ * its key values as producers so other code can subscribe to them, while also
+ * providing a convenience `begin()` method that wires the default Signal K
+ * outputs and PUT listener.
+ */
 class VacuflushPumpMonitor : public sensesp::FileSystemSaveable {
  public:
+  /**
+   * @brief Constructs a pump monitor for one named pump role.
+   *
+   * @param pump_role Role suffix used in default Signal K paths such as
+   *   `master` or `guest`.
+   * @param pump_name Human-readable pump name for UI labels and metadata.
+   * @param config_path SensESP configuration path for this pump monitor.
+   * @param sense_pin Digital input pin used to sense pump running state.
+   * @param relay_pin GPIO used to drive the normally-closed interrupt relay.
+   */
   VacuflushPumpMonitor(const String& pump_role, const String& pump_name,
                        const String& config_path, int sense_pin,
                        int relay_pin);
 
+  /**
+   * @brief Wires the monitor's internal producers to their default consumers.
+   *
+   * @param state_report_interval_seconds Shared repeat interval for running and
+   *   enabled-state reporting.
+   * @param aggregate_report_interval_seconds Shared repeat interval for counts
+   *   and aggregate statistics reporting.
+   */
   void begin(float state_report_interval_seconds,
              float aggregate_report_interval_seconds);
   void set_manual_enabled(bool enabled, bool persist = true);
