@@ -5,6 +5,12 @@
 #include <ArduinoOTA.h>
 #include <WiFi.h>
 
+#if __has_include("device_config.h")
+#include "device_config.h"
+#else
+#error "Missing device_config.h. Copy include/device_config.example.h to include/device_config.h and fill in your local settings before building."
+#endif
+
 #include "Debug.h"
 #include "pumps/vacuflush_pump_monitor.h"
 #include "sensesp/signalk/signalk_ws_client.h"
@@ -22,12 +28,6 @@ using namespace halmet;
 using namespace app;
 
 namespace {
-
-constexpr const char* kDeviceHostname = "sk-flush";
-constexpr const char* kBoatWifiSsid = "YOUR-SK-SERVER-WIFI-HERE";
-constexpr const char* kBoatWifiPassword = "YOUR-WIFI-PASSWORD-HERE";
-constexpr const char* kSignalKServerHost = "YOUR-SK-SERVER-HOSTNAME-HERE";
-constexpr uint16_t kSignalKServerPort = 80;
 
 constexpr int kMasterPumpRelayPin = 16;
 constexpr int kGuestPumpRelayPin = 17;
