@@ -18,10 +18,12 @@
 #include "sensesp/system/observablevalue.h"
 #include "sensesp/ui/config_item.h"
 #include "sensesp_app_builder.h"
+#include "signalk/signalk_time_sync.h"
 #include "system/heartbeat_reporter.h"
 #include "system/halmet_const.h"
 #include "system/halmet_serial.h"
 #include "system/ui_counter.h"
+
 
 using namespace sensesp;
 using namespace halmet;
@@ -59,8 +61,17 @@ std::shared_ptr<HeartbeatReporter> heartbeat_reporter;
 std::shared_ptr<PersistingObservableValue<float>> pump_state_report_interval_s;
 std::shared_ptr<PersistingObservableValue<float>>
     pump_aggregate_report_interval_s;
+std::shared_ptr<SignalKTimeSync> signalk_time_sync;
 
 }  // namespace
+
+void configure_ship_timezone() {
+  setenv("TZ", kShipTimeZonePosix, 1);
+  tzset();
+  LOG_I("Time sync: ship timezone set to %s (%s)", kShipTimeZoneName,
+        kShipTimeZonePosix);
+}
+
 
 void setup() {
   SetupLogging(ESP_LOG_DEBUG);
@@ -78,6 +89,11 @@ void setup() {
 
   LOG_I("Signal K: direct server mode enabled host=%s port=%u use_mdns=false",
         kSignalKServerHost, kSignalKServerPort);
+
+  configure_ship_timezone();
+
+  signalk_time_sync = std::make_shared<SignalKTimeSync>();
+  signalk_time_sync->begin();
 
   master_pump = std::make_shared<VacuflushPumpMonitor>(
       kMasterPumpRole, kMasterPumpName, kMasterPumpConfigPath,

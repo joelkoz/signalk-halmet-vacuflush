@@ -11,4 +11,8 @@ constexpr const char* kBoatWifiPassword = "your-password";
 constexpr const char* kSignalKServerHost = "signalk-server.local";
 constexpr uint16_t kSignalKServerPort = 3000;
 
+// Time zone configuration for the boat
+constexpr const char* kShipTimeZoneName = "US Eastern";
+constexpr const char* kShipTimeZonePosix = "EST5EDT,M3.2.0/2,M11.1.0/2";
+
 #endif  // DEVICE_CONFIG_H_
