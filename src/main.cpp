@@ -136,6 +136,19 @@ void setup() {
       ->set_title("Guest Head Pump")
       ->set_sort_order(uiCounter.nextValue());
 
+  ConfigItem(master_pump->total_flush_count_producer())
+      ->set_title("Master Head Pump Total Flush Count")
+      ->set_description(
+          "Lifetime total number of flushes recorded for the master head pump. "
+          "Adjust to correct or reset the counter.")
+      ->set_sort_order(uiCounter.nextValue());
+  ConfigItem(guest_pump->total_flush_count_producer())
+      ->set_title("Guest Head Pump Total Flush Count")
+      ->set_description(
+          "Lifetime total number of flushes recorded for the guest head pump. "
+          "Adjust to correct or reset the counter.")
+      ->set_sort_order(uiCounter.nextValue());
+
   sensesp_app->get_ws_client()->connect_to(
       new LambdaConsumer<SKWSConnectionState>([](SKWSConnectionState state) {
         if (state == SKWSConnectionState::kSKWSConnected) {

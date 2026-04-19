@@ -87,7 +87,7 @@ class VacuflushPumpMonitor : public sensesp::FileSystemSaveable {
   sensesp::IntProducer* daily_flush_count_producer() const {
     return daily_flush_count_;
   }
-  sensesp::IntProducer* total_flush_count_producer() const {
+  sensesp::PersistingObservableValue<int>* total_flush_count_producer() const {
     return total_flush_count_;
   }
   sensesp::StringProducer* runtime_notification_producer() const {
