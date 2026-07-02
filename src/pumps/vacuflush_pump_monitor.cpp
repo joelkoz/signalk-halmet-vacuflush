@@ -494,6 +494,15 @@ void VacuflushPumpMonitor::set_manual_enabled(bool enabled, bool persist) {
     fault_latched_ = false;
     clear_all_notifications();
     reset_cycle_window(millis());
+
+    if (logical_running_) {
+      // The run-sense input may have remained active for the entire time
+      // the pump was disabled (e.g. a stuck valve). Restart the runtime
+      // timer so re-enabling doesn't immediately re-trip the max run time
+      // fault based on stale elapsed time.
+      cycle_start_ms_ = millis();
+      stop_candidate_ms_ = 0;
+    }
   }
 
   if (effective_enabled()) {
